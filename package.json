@@ -4,6 +4,7 @@
   "description": "[experimental] Parser combinator implementation for TypeScript",
   "main": "dist/index.js",
   "scripts": {
+    "postinstall": "typings install",
     "build": "tsc",
     "watch": "tsc --watch",
     "lint": "tslint src/**/*.ts",
