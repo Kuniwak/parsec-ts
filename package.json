@@ -1,0 +1,31 @@
+{
+  "name": "parsec-ts",
+  "version": "0.0.0",
+  "description": "[experimental] Parser combinator implementation for TypeScript",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "lint": "tslint src/**/*.ts",
+    "pretest": "npm run build",
+    "test": "mocha dist/**/test_*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Kuniwak/parsec-ts.git"
+  },
+  "keywords": [
+    "parsec"
+  ],
+  "author": "Kuniwak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kuniwak/parsec-ts/issues"
+  },
+  "homepage": "https://github.com/Kuniwak/parsec-ts#readme",
+  "devDependencies": {
+    "tslint": "^3.8.0",
+    "typescript": "^1.8.10",
+    "typings": "^0.8.1"
+  }
+}
