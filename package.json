@@ -9,6 +9,9 @@
     "watch": "tsc --watch",
     "lint": "tslint src/**/*.ts",
     "pretest": "npm run build",
+    "coverage:pre": "npm run build",
+    "coverage:body": "istanbul cover _mocha dist/**/test_*.js",
+    "coverage": "npm-run-all coverage:pre coverage:body",
     "test": "mocha dist/**/test_*.js"
   },
   "repository": {
@@ -25,6 +28,9 @@
   },
   "homepage": "https://github.com/Kuniwak/parsec-ts#readme",
   "devDependencies": {
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5",
+    "npm-run-all": "^1.8.0",
     "tslint": "^3.8.0",
     "typescript": "^1.8.10",
     "typings": "^0.8.1"
