@@ -238,6 +238,52 @@ describe("index.ts", () => {
 
 
 
+  describe("plus2", () => {
+    context("when the first parser can consume the first char", () => {
+      it("should consume the first char", () => {
+        const parseA = Parsec.char("a");
+        const parseB = Parsec.char("b");
+        const parse = Parsec.plus2(parseA, parseB);
+
+        const result = parse("ab");
+
+        assert.deepStrictEqual(result, [
+          ["a", "b"],
+        ]);
+      });
+    });
+
+
+    context("when the second parser can consume the first char", () => {
+      it("should consume the first char", () => {
+        const parseA = Parsec.char("a");
+        const parseB = Parsec.char("b");
+        const parse = Parsec.plus2(parseA, parseB);
+
+        const result = parse("ba");
+
+        assert.deepStrictEqual(result, [
+          ["b", "a"],
+        ]);
+      });
+    });
+
+
+    context("when neither the first parser nor the second parser can consume the first char", () => {
+      it("should not consume anything", () => {
+        const parseA = Parsec.char("a");
+        const parseB = Parsec.char("b");
+        const parse = Parsec.plus2(parseA, parseB);
+
+        const result = parse("ca");
+
+        assert.deepStrictEqual(result, []);
+      });
+    });
+  });
+
+
+
   describe("letter", () => {
     context("when the input starts with a letter", () => {
       it("should consume the letter", () => {
@@ -392,32 +438,32 @@ describe("index.ts", () => {
 
   describe("many", () => {
     context("when the input starts with a keyword which the given parser can parse", () => {
-      it("should not consume anything", () => {
-        const parseA = Parsec.string("foo");
+      it("should consume the keyword", () => {
+        const parseA = Parsec.char("a");
         const parse = Parsec.many(parseA);
 
-        const result = parse("foo bar");
+        const result = parse("ab");
 
         assert.deepStrictEqual(result, [
-          [["foo"], " bar"],
-          [[], "foo bar"],
+          [["a"], "b"],
+          [[], "ab"],
         ]);
       });
     });
 
 
 
-    context("when the input starts with a keyword which the given parser can parse", () => {
-      it("should not consume anything", () => {
-        const parseA = Parsec.string("foo");
+    context("when the input starts with several keywords which the given parser can parse", () => {
+      it("should consume the keywords", () => {
+        const parseA = Parsec.char("a");
         const parse = Parsec.many(parseA);
 
-        const result = parse("foofoo bar");
+        const result = parse("aab");
 
         assert.deepStrictEqual(result, [
-          [["foo", "foo"], " bar"],
-          [["foo"], "foo bar"],
-          [[], "foofoo bar"],
+          [["a", "a"], "b"],
+          [["a"], "ab"],
+          [[], "aab"],
         ]);
       });
     });
@@ -426,13 +472,13 @@ describe("index.ts", () => {
 
     context("when the input starts with keywords which the given parser cannot parse", () => {
       it("should not consume anything", () => {
-        const parseA = Parsec.string("foo");
+        const parseA = Parsec.char("a");
         const parse = Parsec.many(parseA);
 
-        const result = parse("bar");
+        const result = parse("bbb");
 
         assert.deepStrictEqual(result, [
-          [[], "bar"],
+          [[], "bbb"],
         ]);
       });
     });
