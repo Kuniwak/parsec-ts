@@ -529,6 +529,82 @@ describe("index.ts", () => {
       });
     });
   });
+
+
+
+  describe("sepBy1", () => {
+    context("when the input is 'X' and the given parser can consume 'A'", () => {
+      it("should consume the X chars", () => {
+        const parseA = Parsec.char("X");
+        const parseSep = Parsec.char(",");
+        const parse = Parsec.sepBy1(parseA, parseSep);
+
+        const result = parse("X");
+
+        assert.deepStrictEqual(result, [
+          [["X"], ""],
+        ]);
+      });
+    });
+
+
+    context("when the input is 'X,X,X' and the given parser can consume 'A'", () => {
+      it("should consume the X chars", () => {
+        const parseA = Parsec.char("X");
+        const parseSep = Parsec.char(",");
+        const parse = Parsec.sepBy1(parseA, parseSep);
+
+        const result = parse("X,X,X");
+
+        assert.deepStrictEqual(result, [
+          [["X", "X", "X"], ""],
+          [["X", "X"], ",X"],
+          [["X"], ",X,X"],
+        ]);
+      });
+    });
+
+
+    context("when the input is 'X,' and the given parser can consume 'A'", () => {
+      it("should consume the X chars", () => {
+        const parseA = Parsec.char("X");
+        const parseSep = Parsec.char(",");
+        const parse = Parsec.sepBy1(parseA, parseSep);
+
+        const result = parse("X,");
+
+        assert.deepStrictEqual(result, [
+          [["X"], ","],
+        ]);
+      });
+    });
+
+
+    context("when the input is ',' and the given parser can consume 'A'", () => {
+      it("should not consume anything", () => {
+        const parseA = Parsec.char("X");
+        const parseSep = Parsec.char(",");
+        const parse = Parsec.sepBy1(parseA, parseSep);
+
+        const result = parse(",");
+
+        assert.deepStrictEqual(result, []);
+      });
+    });
+
+
+    context("when the input is '' and the given parser can consume 'A'", () => {
+      it("should not consume anything", () => {
+        const parseA = Parsec.char("X");
+        const parseSep = Parsec.char(",");
+        const parse = Parsec.sepBy1(parseA, parseSep);
+
+        const result = parse("");
+
+        assert.deepStrictEqual(result, []);
+      });
+    });
+  });
 });
 
 

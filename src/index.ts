@@ -116,6 +116,17 @@ export function many1<A>(parserP: Parser<A>): Parser<A[]> {
 }
 
 
+export function sepBy1<A, B>(parserP: Parser<A>, parserSep: Parser<B>): Parser<A[]> {
+  return bind2(parserP, (x) => {
+    return bind2(many(bind2(parserSep, () => {
+      return bind2<A, A>(parserP, (y) => result(y));
+    })), (xs) => {
+      return result(cons(x, xs));
+    });
+  });
+}
+
+
 function isDigit(x: string): boolean {
   return "0" <= <any> x && <any> x <= "9";
 }
