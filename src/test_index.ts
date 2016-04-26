@@ -483,6 +483,52 @@ describe("index.ts", () => {
       });
     });
   });
+
+
+
+  describe("many1", () => {
+    context("when the input starts with a keyword which the given parser can parse", () => {
+      it("should consume the keyword", () => {
+        const parseA = Parsec.char("a");
+        const parse = Parsec.many1(parseA);
+
+        const result = parse("ab");
+
+        assert.deepStrictEqual(result, [
+          [["a"], "b"],
+        ]);
+      });
+    });
+
+
+
+    context("when the input starts with several keywords which the given parser can parse", () => {
+      it("should consume the keywords", () => {
+        const parseA = Parsec.char("a");
+        const parse = Parsec.many1(parseA);
+
+        const result = parse("aab");
+
+        assert.deepStrictEqual(result, [
+          [["a", "a"], "b"],
+          [["a"], "ab"],
+        ]);
+      });
+    });
+
+
+
+    context("when the input starts with keywords which the given parser cannot parse", () => {
+      it("should not consume anything", () => {
+        const parseA = Parsec.char("a");
+        const parse = Parsec.many1(parseA);
+
+        const result = parse("bbb");
+
+        assert.deepStrictEqual(result, []);
+      });
+    });
+  });
 });
 
 

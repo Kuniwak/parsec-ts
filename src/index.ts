@@ -107,6 +107,15 @@ export function many<A>(parserP: Parser<A>): Parser<A[]> {
 }
 
 
+export function many1<A>(parserP: Parser<A>): Parser<A[]> {
+  return bind2(parserP, (x) => {
+    return bind2(many(parserP), (xs) => {
+      return result(cons(x, xs));
+    });
+  });
+}
+
+
 function isDigit(x: string): boolean {
   return "0" <= <any> x && <any> x <= "9";
 }
