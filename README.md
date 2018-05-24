@@ -7,4 +7,4 @@ parsec-ts
 SEE ALSO
 --------
 
-- ![Monadic Parser Combinators](http://www.cs.nott.ac.uk/~pszgmh/monparsing.pdf)
+- [Monadic Parser Combinators](http://www.cs.nott.ac.uk/~pszgmh/monparsing.pdf)
