@@ -1,5 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
-
 import * as assert from "assert";
 import * as ArrayUtil from "./array";
 
